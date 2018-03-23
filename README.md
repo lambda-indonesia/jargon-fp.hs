@@ -99,7 +99,7 @@ Fungsi kedua, `map`, mengambil dua *argument* yaitu `f` dan `(x:xs)` dimana
 Lalu, di dalam fungsi `main`, kita melakukan implementasi
 `map' (add 1) [1..5]`. Fungsi `add` yang seharusnya diberikan dua *argument*,
 kita berikan hanya satu *argument*. Ini merujuk ke
-[Partial Application][#partial-application].
+[Partial Application](#partial-application).
 
 Karena dalam fungsi `map'` *argument* pertamanya adalah `f`, yang mana
 merupakan sebuah fungsi, maka anggap saja `f = add 1`. Karena di dalam fungsi
