@@ -99,7 +99,7 @@ bahwa `add` sudah diberikan dua *argument* di dalam fungsi `map'`.
 
 Terlihat jelas bahwasannya kita melakukan *passing* fungsi (sebagai *argument*)
 ke fungsi yang lain. Untuk penjelasan mengenai pengembalian fungsi yang berupa
-fungsi juga, silakan lihat (Currying)[#currying].
+fungsi juga, silakan lihat [Currying](#currying).
 
 ## Pemelihara
 
