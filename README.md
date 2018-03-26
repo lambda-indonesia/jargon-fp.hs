@@ -7,9 +7,12 @@ Jargon-jargon pemrograman fungsional serta contoh implementasinya di Haskell.
 - [Arity](#arity)
 - [Currying](#currying)
 - [Higher Order Function](#higher-order-function)
+- [Idempotent](#idempotent)
 - [Partial Application](#partial-application)
 - [Pure Function](#pure-function)
 - [Side Effect](#side-effect)
+- [Type Signature](#type-signature)
+- [Variable](#variable)
 
 ## Arity
 
@@ -111,6 +114,34 @@ Terlihat jelas bahwasannya kita melakukan *passing* fungsi (sebagai *argument*)
 ke fungsi yang lain. Untuk penjelasan mengenai pengembalian fungsi yang berupa
 fungsi juga, silakan lihat [Partial Application](#partial-application).
 
+## Idempotent
+
+Suatu fungsi dikatakan *idempotent* jika nilai kembalinya selalu sama ketika
+diaplikasikan kembali ke fungsinya.
+
+### Contoh
+
+```haskell
+f :: a -> a
+f x = x
+
+sort :: Ord a => [a] -> [a]
+sort [] = []
+sort (x:xs) = sort left ++ (x : sort right)
+  where
+    left = [y | y <- xs, y <= x]
+    right = [y | y <- xs, y > x]
+```
+
+Fungsi `f` merupakan fungsi identitas yang akan selalu mengembalikan dirinya
+sendiri. Maka, `f(f(f(x)))` akan selalu bernilai `x`.
+
+Fungsi `sort` merupakan fungsi yang akan melakukan pengurutan dari nilai
+terkecil ke terbesar. Anggap saja terdapat `sort([1,4,2,13,5])` yang memiliki
+keluaran `[1,2,4,5,13]`. Ketika nilai ini dimasukkan kembali ke fungsi `sort`,
+hasilnya tidak akan berubah. Untuk itu, `sort(sort([1,4,2,13,5]))` akan selalu
+sama dengan `[1,2,4,5,13]`.
+
 ## Partial Application
 
 Melakukan *passing argument* secara parsial. Maksudnya, apabila suatu fungsi
@@ -195,6 +226,57 @@ main = do
 -- > Tergantung dari masukan pengguna. Misal, Haskell.
 -- > Halo, Haskell!
 ```
+
+## Type Signature
+
+Sebuah ekspresi yang mendeklarasikan jenis-jenis tipe data dari suatu fungsi
+atau pengubah.
+
+### Contoh
+
+```haskell
+add :: Num a => a -> a -> a
+note :: String
+```
+
+Pada kode di atas, `::` menunjukkan deklarasi *type signature*. Fungsi `add`
+memiliki *type signature* `Num a => a -> a -> a` dimana `Num a` merupakan
+sebuah *context* dan `a -> a -> a` merupakan tipe datanya. Nilai kembali atau
+*return value* dari fungsi tersebut adalah tipe data yang paling kanan. Contoh,
+pada `Int -> Int -> Bool`, yang menjadi *return value* adalah `Bool`.
+Sementara sisanya merupakan *argument* yang diterima.
+
+Contoh lainnya yaitu `note`. Berhubung hanya satu *type*, yaitu `String`, maka
+`String` merupakan tipe datanya. `note` dapat disebut sebagai fungsi yang tidak
+memiliki *argument* sehingga `String` dapat kita sebut sebagai *return value*.
+`note` dapat disebut sebagai *variable* ketika ada suatu *value* yang
+dipasangkan dengannya. Istilah *variable* di Haskell tidak sama dengan istilah
+di bahasa pemrograman lain. Baca [Variable](#variable) untuk mengetahui lebih
+jauh.
+
+## Variable
+
+*Variable* di Haskell merupakan sebuah nama untuk suatu ekspresi yang absah.
+Sama seperti *variable* pada umumnya, operator `=` merupakan penanda yang
+memasangkan nama *variable* dengan suatu *value* dimana *value* merupakan
+bentuk ekspresi yang absah. Jangkauan atau *scope* dari *variable* dapat diatur
+dengan menggunakan klausa `let` atau `where`.
+
+Pengertian lain dari *variable* adalah nama dari suatu *argument* fungsi. Hal
+ini merujuk ke Lambda Calculus.
+
+### Contoh
+
+```haskell
+main :: IO ()
+main = do
+  let phi = 1.618
+      compute x = x * phi
+  in print $ compute 10
+```
+
+`phi` merupakan bentuk aplikasi dari pengertian di paragraf pertama. Sementara
+`compute x`, ambil `x` saja, merupakan pengertian dari paragraf kedua.
 
 ## Pemelihara
 
